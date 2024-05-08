@@ -1,10 +1,29 @@
-from flask import Flask
+from flask import Flask, render_template
+import os
+from flask_wtf import FlaskForm
+from wtforms import FileField, SubmitField
+from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+template_dir = os.path.join(template_dir, 'frontend')
+template_dir = os.path.join(template_dir, 'public')
 
-@app.route("/prediction")
+app = Flask(__name__, template_folder=template_dir)
+app.config['SECRET_KEY'] = 'shhh'
+app.config['UPLOAD_FOLDER'] = 'files'
+
+class UploadFileForm(FlaskForm):
+    file = FileField("File")
+    submit = SubmitField("Upload File")
+
+@app.route("/prediction", methods=['GET',"POST"])
 def predict():
-    return {"members": ["Member1", "Member2", "Member3"]}
+    form = UploadFileForm()
+    if form.validate_on_submit():
+        file = form.file.data
+        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+        return "File has been uploaded."
+    return render_template('index.html', form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
