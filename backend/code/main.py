@@ -31,7 +31,7 @@ def process_upload():
 
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction():
-    return {"hello":"these are the results!!!"}
+    return {"hello":"78%"}
 
 if __name__ == "__main__":
     app.run(debug=True)
