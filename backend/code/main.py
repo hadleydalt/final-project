@@ -13,7 +13,7 @@ class UploadFileForm(FlaskForm):
     submit = SubmitField("Upload File")
 
 @app.route("/prediction", methods=['GET',"POST"])
-def generate():
+def process_upload():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
@@ -24,13 +24,13 @@ def generate():
             suffix = file.filename[len(file.filename) - 3:]
             if suffix == 'mp4':
                 file_path = "files/" + file.filename
-                result = fetchtest()
+                result = generate_prediction()
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form, file_path=None)
 
-@app.route("/fetchtest", methods=['GET',"POST"])
-def fetchtest():
+@app.route("/generate", methods=['GET',"POST"])
+def generate_prediction():
     return {"hello":"these are the results!!!"}
 
 if __name__ == "__main__":
