@@ -18,7 +18,11 @@
       {{form.submit()}}
     </form>
     {% if file_path %}
-      <img class="result-img" src="{{ url_for('static', filename=file_path) }}" alt="Uploaded Image">
+      <!--<img class="result-img" src="{{ url_for('static', filename=file_path) }}" alt="Uploaded Image">-->
+      <video class="result-img" controls>
+        <source src="{{ url_for('static', filename=file_path) }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     {% else %}
         <p>No image uploaded.</p>
     {% endif %}
