@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 
 template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 template_dir = os.path.join(template_dir, 'frontend')
-template_dir = os.path.join(template_dir, 'public')
+template_dir = os.path.join(template_dir, 'html')
 
 app = Flask(__name__, template_folder=template_dir)
 app.config['SECRET_KEY'] = 'shhh'
@@ -17,7 +17,7 @@ class UploadFileForm(FlaskForm):
     submit = SubmitField("Upload File")
 
 @app.route("/prediction", methods=['GET',"POST"])
-def predict():
+def generate():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
