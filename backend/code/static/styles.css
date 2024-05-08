@@ -184,4 +184,5 @@ body {
 
 .result-message {
     font-size: calc(1.02vh + 1.02vw);
+    color: #c4c4c4;
 }
