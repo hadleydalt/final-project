@@ -4,11 +4,11 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 
-template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-template_dir = os.path.join(template_dir, 'frontend')
-template_dir = os.path.join(template_dir, 'html')
+#template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+#template_dir = os.path.join(template_dir, 'frontend')
+#template_dir = os.path.join(template_dir, 'html')
 
-app = Flask(__name__, template_folder=template_dir)
+app = Flask(__name__) #template_folder=template_dir
 app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'files'
 
@@ -24,6 +24,10 @@ def generate():
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
         return "File has been uploaded."
     return render_template('index.html', form=form)
+
+@app.route("/fetchtest", methods=['GET',"POST"])
+def fetchtest():
+    return {"hello":"these are the results!!!"}
 
 if __name__ == "__main__":
     app.run(debug=True)
