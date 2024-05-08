@@ -99,6 +99,11 @@ body {
     border: 1px solid #91DFDB;
 }
 
+.spacer {
+    background: yellow;
+    width: 30%;
+}
+
 .bold {
     font-weight: 600;
 }
