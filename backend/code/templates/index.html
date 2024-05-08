@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveAlive</title>
     <script src="{{url_for('static', filename='index.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
   </head>
   <body>
     <h1>Upload File</h1>
@@ -16,6 +17,11 @@
       {{form.file()}}
       {{form.submit()}}
     </form>
+    {% if file_path %}
+      <img class="result-img" src="{{ url_for('static', filename=file_path) }}" alt="Uploaded Image">
+    {% else %}
+        <p>No image uploaded.</p>
+    {% endif %}
     {% if result %}
     <h2>Result:</h2>
     <p>{{ result }}</p>
