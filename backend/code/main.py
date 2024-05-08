@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
 class UploadFileForm(FlaskForm):
-    file = FileField("File")
+    file = FileField("Upload a Video")
     submit = SubmitField("Upload File")
 
 @app.route("/prediction", methods=['GET',"POST"])
@@ -31,7 +31,7 @@ def process_upload():
 
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction():
-    return {"hello":"these are the results!!!"}
+    return {"hello":"78%"}
 
 if __name__ == "__main__":
     app.run(debug=True)
