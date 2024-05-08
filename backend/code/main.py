@@ -18,11 +18,16 @@ def generate():
     if form.validate_on_submit():
         file = form.file.data
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
-        file_path = "files/" + file.filename
-        result = fetchtest()
-        to_print = result['hello']
+        file_path = ""
+        to_print = None
+        if len(file.filename) > 3:
+            suffix = file.filename[len(file.filename) - 3:]
+            if suffix == 'mp4':
+                file_path = "files/" + file.filename
+                result = fetchtest()
+                to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, file_path=None)
 
 @app.route("/fetchtest", methods=['GET',"POST"])
 def fetchtest():

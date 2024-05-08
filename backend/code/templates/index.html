@@ -24,7 +24,11 @@
         Your browser does not support the video tag.
       </video>
     {% else %}
-        <p>No image uploaded.</p>
+      {% if file_path == "" %}
+        <p>Invalid upload. Your upload must be of .mp4 format.</p>
+      {% else %}
+        <p>No video uploaded.</p>
+      {% endif %}
     {% endif %}
     {% if result %}
     <h2>Result:</h2>
