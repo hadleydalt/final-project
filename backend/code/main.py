@@ -21,10 +21,10 @@ def generate():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+        file_path = file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
         result = fetchtest()
         to_print = result['hello']
-        return render_template('index.html', form=form, result=to_print) 
+        return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form)
 
 @app.route("/fetchtest", methods=['GET',"POST"])
