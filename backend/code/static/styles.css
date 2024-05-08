@@ -99,21 +99,10 @@ body {
     border: 1px solid #91DFDB;
 }
 
-.button-enabled-wrapper {
-    color: black;
-    height: 80%;
-    background: #91DFDB;
-    font-size: calc(1.02vh + 1.02vw);
-    width: 40%;
+.button-enabled-label {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid #91DFDB;
-}
-
-.spacer {
-    background: yellow;
-    width: 30%;
+    justify-content: space-between;
 }
 
 .bold {
@@ -134,18 +123,6 @@ body {
     font-size: calc(1.5vw + 1.5vh);
     width: 63.87087%;
 }
-
-/*input[type="file"] {
-    color: black;
-    height: 80%;
-    background: #91DFDB;
-    font-size: calc(1.02vh + 1.02vw);
-    width: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #91DFDB;
-} */
 
 .links-container {
     width: 37.5661%;
