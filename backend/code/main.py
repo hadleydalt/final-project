@@ -4,11 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 
-#template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-#template_dir = os.path.join(template_dir, 'frontend')
-#template_dir = os.path.join(template_dir, 'html')
-
-app = Flask(__name__) #template_folder=template_dir
+app = Flask(__name__) 
 app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
