@@ -63,7 +63,16 @@
                   </defs>
                   </svg>
                 </div>
-                <div class="button-enabled">Upload a Video
+                <form method='POST' enctype="multipart/form-data" class="button-enabled">
+                  {{ form.csrf_token }}
+                  {{ form.hidden_tag() }}
+                  <div class="button-enabled-wrapper">
+                      <input type="file" id="upload-file" name="file" style="display:none">
+                      <label for="upload-file" id="upload-label">Upload a Video</label>
+                  </div>
+                  {{ form.submit() }}
+              </form>
+                <!--<div class="button-enabled">Upload a Video
                   <svg style="padding-left: 3%" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_19_197)">
                     <path d="M13.5 4.5L11.9138 6.08625L18.1912 12.375H4.5V14.625H18.1912L11.9138 20.9137L13.5 22.5L22.5 13.5L13.5 4.5Z" fill="black"/>
@@ -74,7 +83,7 @@
                     </clipPath>
                     </defs>
                     </svg>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -83,12 +92,15 @@
     </div>
     <h1>Upload File</h1>
 
-    <form method='POST' enctype="multipart/form-data">
+    <!--<form method='POST' enctype="multipart/form-data">
       {{ form.csrf_token }}
       {{form.hidden_tag()}}
-      {{form.file()}}
+      <div>
+        <input type="file" id="upload-file" name="file" class="button-enabled">
+        <label for="upload-file" id="upload-label" class="upload-label">Upload a Video</label>
+    </div>
       {{form.submit()}}
-    </form>
+    </form> -->
     {% if file_path %}
       <!--<img class="result-img" src="{{ url_for('static', filename=file_path) }}" alt="Uploaded Image">-->
       <video class="result-img" controls>

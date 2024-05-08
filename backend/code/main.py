@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
 class UploadFileForm(FlaskForm):
-    file = FileField("File")
+    file = FileField("Upload a Video")
     submit = SubmitField("Upload File")
 
 @app.route("/prediction", methods=['GET',"POST"])
