@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__) #template_folder=template_dir
 app.config['SECRET_KEY'] = 'shhh'
-app.config['UPLOAD_FOLDER'] = 'files'
+app.config['UPLOAD_FOLDER'] = 'static/files'
 
 class UploadFileForm(FlaskForm):
     file = FileField("File")
@@ -21,7 +21,8 @@ def generate():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
-        file_path = file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
+        file_path = "files/" + file.filename
         result = fetchtest()
         to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
