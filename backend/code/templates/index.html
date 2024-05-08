@@ -5,10 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveAlive</title>
-    <script src="{{url_for('static', filename='index.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="https://use.typekit.net/fpl5kxl.css">
+    <!--
+      Extrabold: font-weight 800
+      Semibold: font-weight 600
+      Regular: font-weight 400
+      Light: font-weight 300
+    -->
   </head>
   <body>
+    <div class="container">
+      <div class="topbar">
+        <div class="title-container">
+          <div class="title">
+            DriveAlive
+          </div>
+        </div>
+        <div class="links-container">
+          <div class="link-container">
+            <div id="link1" class="link">
+              Predict
+            </div>
+          </div>
+          <div class="link-container">
+            <div id="link2" class="link">
+              Methodology
+            </div>
+          </div>
+          <div class="link-container">
+            <div id="link3" class="link">
+              About
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+
+      </div>
+    </div>
     <h1>Upload File</h1>
 
     <form method='POST' enctype="multipart/form-data">
@@ -38,5 +73,6 @@
     <!--<button onclick="fetch_test()">Display results</button>-->
     <h2 id="to_change"></h2>
   </p>
+  <script src="{{url_for('static', filename='index.js')}}"></script>
   </body>
 </html>
