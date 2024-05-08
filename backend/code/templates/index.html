@@ -63,7 +63,7 @@
                   </defs>
                   </svg>
                 </div>
-                <form method='POST' enctype="multipart/form-data" class="button-enabled">
+                <form method='POST' enctype="multipart/form-data" class="button-enabled" id="upload-form">
                   {{ form.csrf_token }}
                   {{ form.hidden_tag() }}
                   <div class="button-enabled" style="width:100%">
@@ -84,7 +84,9 @@
                         </svg>
                       </label>
                   </div>
-                  <!--{{ form.submit() }}-->
+                  <div style="display: none;">
+                    {{ form.submit() }}
+                </div>
               </form>
               </div>
             </div>

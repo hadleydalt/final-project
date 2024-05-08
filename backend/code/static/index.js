@@ -32,5 +32,18 @@ function setup_listeners() {
     })
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("upload-form");
+    const fileInput = form.querySelector("input[type=file]");
+
+    fileInput.addEventListener("change", function() {
+        console.log("hello")
+        if (fileInput.files.length > 0) {
+            const submitButton = form.querySelector("input[type=submit]");
+            submitButton.click();
+        }
+    });
+});
+
 setup_listeners()
 match_current()
