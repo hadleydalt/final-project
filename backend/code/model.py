@@ -23,9 +23,9 @@ print(tf.__version__)
 
 #i'm saying 0 is eyes closed, 1 is eyes open
 
-paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Closed_Eyes/", "C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Open_Eyes/"]
-test_paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/close Eyes/","C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/open Eyes/"]
-types = ["eyes_closed", "eyes_open"]
+#paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Closed_Eyes/", "C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Open_Eyes/"]
+#test_paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/close Eyes/","C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/open Eyes/"]
+#types = ["eyes_closed", "eyes_open"]
 
 
 def pathToArray(mPaths, mTypes):
@@ -88,7 +88,7 @@ def trainModel(curr_paths, curr_test_paths):
     print("2")
 
 
-trainModel(paths, test_paths)
+#trainModel(paths, test_paths)
 
 
 #Following this model: https://machinelearningmastery.com/tensorflow-tutorial-deep-learning-with-tf-keras/

@@ -24,3 +24,5 @@ results/*
 code/logs/*
 code/checkpoints/*
 code/misclassified/*
+
+data/
