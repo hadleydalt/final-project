@@ -16,9 +16,10 @@ print(tf.__version__)
 
 paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Closed_Eyes/", "C:/Users/shnur/OneDrive/Documents/Datasets/Just eyes - Prasad drowsiness detection dataset/train/Open_Eyes/"]
 test_paths = ["C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/close Eyes/","C:/Users/shnur/OneDrive/Documents/Datasets/eye_test - Elilah/open Eyes/"]
+types = ["eyes_closed", "eyes_open"]
 
 
-def pathToArray(mPaths):
+def pathToArray(mPaths, mTypes):
     x=[]
     y=[]
     for n in range(len(mPaths)):
@@ -32,43 +33,54 @@ def pathToArray(mPaths):
 
         #get list of equal length, set their value to 0 or 1 accordingly as their tag
         curr_y_train = np.empty((len(curr_x_train),1))   
-        curr_y_train.fill(n)
+        curr_y_train.fill(mTypes[n])
 
         x.extend(curr_x_train)
         y.extend(curr_y_train)
     #x = np.expand_dims(x, axis =3)
     return (x, y)
+def trainModel(curr_paths, curr_test_paths):
+    x_train, y_train = pathToArray(curr_paths,types)
+    x_test, y_test =  pathToArray(curr_test_paths,types)
 
-x_train, y_train = pathToArray(paths)
-x_test, y_test =  pathToArray(test_paths)
+    x_train = np.reshape(x_train, (np.shape(x_train)[0], np.shape(x_train)[1], np.shape(x_train)[2], 1))
+    x_test = np.reshape(x_test, (np.shape(x_test)[0], np.shape(x_test)[1], np.shape(x_test)[2], 1))
 
-#test_image = io.imread("./s0001_00002_0_0_0_0_0_01.png")
-#print(np.shape(test_image))
+    x_train = x_train.astype('float32') / 255.0
+    x_test = x_test.astype('float32') / 255.0
 
-print(np.shape(x_train))
+    in_shape = x_train.shape[1:]
 
-print("starting model creation")
+    print(x_train.shape)
+    print(in_shape)
 
-n_features = np.shape(x_train)[1]
-print(n_features)
-model = keras.Sequential()
-model.add(Dense(10, activation = 'relu', kernel_initializer = 'he_normal', input_shape=(n_features,)))
-model.add(Dense(8, activation = 'relu', kernel_initializer = 'he_normal'))
-model.add(Dense(1, activation = 'sigmoid'))
+    print("starting model creation")
 
-print("compiling")
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-print("x_train shape is ")
-print(np.shape(x_train))
-print(x_train[0])
-print("y_train shape is")
-print(np.shape(y_train))
+    n_features = np.shape(x_train)[1]
+    print(n_features)
+    model = keras.Sequential()
+    model.add(layers.Conv2D(32, (3,3), activation='relu', kernel_initializer='he_uniform', input_shape=in_shape))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(100, activation='relu', kernel_initializer='he_uniform'))
+    model.add(layers.Dropout(0.5))
+    model.add(layers.Dense(len(curr_paths), activation='softmax'))
 
-print("fitting")
-model.fit(x_train, y_train, epochs=150, batch_size=32, verbose=0)
+    print("compiling")
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    print("x_train shape is ")
+    print(np.shape(x_train))
+    print("y_train shape is")
+    print(np.shape(y_train))
 
-print("2")
+    print("fitting")
+    model.fit(x_train, y_train, epochs=10, batch_size=128, verbose=0)
+
+    print("2")
+
+
+trainModel(paths, test_paths)
 
 
 #Following this model: https://machinelearningmastery.com/tensorflow-tutorial-deep-learning-with-tf-keras/
-#I haven't done too much here, but I've started and I feel decent about this direciton if we want to use tensorflow for our modeling
+#I haven't done too much here, but I've started and I feel decent about this direction if we want to use tensorflow for our modeling
