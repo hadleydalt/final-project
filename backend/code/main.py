@@ -185,6 +185,8 @@ def test(model, test_data):
     )
 
 
+brute_path = "C:/Users/shnur/OneDrive/Documents/Datasets/USED_DATA/"
+
 def main():
     """ Main function. """
 
@@ -213,10 +215,10 @@ def main():
     # Run script from location of main.py
     os.chdir(sys.path[0])
 
-    datasets = Datasets(ARGS.data, ARGS.task)
+    datasets = Datasets(ARGS.data, ARGS.task)  #changed from ARGS.data to brute_path for initial creation
 
     if ARGS.task == '1':
-        model = YourModel()
+        model = DDModel()
         model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
         checkpoint_path = "checkpoints" + os.sep + \
             "your_model" + os.sep + timestamp + os.sep
