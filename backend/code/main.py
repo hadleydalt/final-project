@@ -216,29 +216,30 @@ def main():
     datasets = Datasets(ARGS.data, ARGS.task)
 
     if ARGS.task == '1':
-        model = YourModel()
+        model = DDModel()
         model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
         checkpoint_path = "checkpoints" + os.sep + \
-            "your_model" + os.sep + timestamp + os.sep
-        logs_path = "logs" + os.sep + "your_model" + \
+            "DD_model" + os.sep + timestamp + os.sep
+        logs_path = "logs" + os.sep + "DD_model" + \
             os.sep + timestamp + os.sep
 
         # Print summary of model
         model.summary()
     else:
-        model = VGGModel()
-        checkpoint_path = "checkpoints" + os.sep + \
-            "vgg_model" + os.sep + timestamp + os.sep
-        logs_path = "logs" + os.sep + "vgg_model" + \
-            os.sep + timestamp + os.sep
-        model(tf.keras.Input(shape=(224, 224, 3)))
+        pass
+        # model = VGGModel()
+        # checkpoint_path = "checkpoints" + os.sep + \
+        #     "vgg_model" + os.sep + timestamp + os.sep
+        # logs_path = "logs" + os.sep + "vgg_model" + \
+        #     os.sep + timestamp + os.sep
+        # model(tf.keras.Input(shape=(224, 224, 3)))
 
-        # Print summaries for both parts of the model
-        model.vgg16.summary()
-        model.head.summary()
+        # # Print summaries for both parts of the model
+        # model.vgg16.summary()
+        # model.head.summary()
 
-        # Load base of VGG model
-        model.vgg16.load_weights(ARGS.load_vgg, by_name=True)
+        # # Load base of VGG model
+        # model.vgg16.load_weights(ARGS.load_vgg, by_name=True)
 
     # Load checkpoints
     if ARGS.load_checkpoint is not None:
