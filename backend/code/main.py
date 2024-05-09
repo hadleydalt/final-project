@@ -4,6 +4,8 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 
+
+
 app = Flask(__name__) 
 app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'

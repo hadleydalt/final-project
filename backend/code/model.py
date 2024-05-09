@@ -1,14 +1,23 @@
 import tensorflow as tf
 import cv2
 from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.layers import Dense
 import numpy as np
 from numpy import pi, exp, sqrt
 from skimage import io, img_as_ubyte, img_as_float32
 from skimage.transform import rescale
 import matplotlib.pyplot as plt
 import glob
+
+
+import tensorflow as tf
+from keras.layers import \
+       Conv2D, MaxPool2D, Dropout, Flatten, Dense, BatchNormalization
+from keras.regularizers import L2, L1
+
+import hyperparameters as hp
+
+
+
 print(tf.__version__)
 
 
@@ -84,3 +93,117 @@ trainModel(paths, test_paths)
 
 #Following this model: https://machinelearningmastery.com/tensorflow-tutorial-deep-learning-with-tf-keras/
 #I haven't done too much here, but I've started and I feel decent about this direction if we want to use tensorflow for our modeling
+
+
+
+
+class DDModel(tf.keras.Model):
+    """neural network model drowsiness-detection. """
+
+    def __init__(self):
+        super(DDModel, self).__init__()
+
+        # TASK 1
+        # TODO: Select an optimizer for your network (see the documentation
+        #       for tf.keras.optimizers)
+        
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate = hp.learning_rate,
+            beta_1=0.9,
+            beta_2=0.999,
+            epsilon=1e-07
+            )
+
+        # TASK 1
+        # TODO: Build your own convolutional neural network, using Dropout at
+        #       least once. The input image will be passed through each Keras
+        #       layer in self.architecture sequentially. Refer to the imports
+        #       to see what Keras layers you can use to build your network.
+        #       Feel free to import other layers, but the layers already
+        #       imported are enough for this assignment.
+        #
+        #       Remember: Your network must have under 15 million parameters!
+        #       You will see a model summary when you run the program that
+        #       displays the total number of parameters of your network.
+        #
+        #       Remember: Because this is a 15-scene classification task,
+        #       the output dimension of the network must be 15. That is,
+        #       passing a tensor of shape [batch_size, img_size, img_size, 1]
+        #       into the network will produce an output of shape
+        #       [batch_size, 15].
+        #
+        #       Note: Keras layers such as Conv2D and Dense give you the
+        #             option of defining an activation function for the layer.
+        #             For example, if you wanted ReLU activation on a Conv2D
+        #             layer, you'd simply pass the string 'relu' to the
+        #             activation parameter when instantiating the layer.
+        #             While the choice of what activation functions you use
+        #             is up to you, the final layer must use the softmax
+        #             activation function so that the output of your network
+        #             is a probability distribution.
+        #
+        #       Note: Flatten is a very useful layer. You shouldn't have to
+        #             explicitly reshape any tensors anywhere in your network.
+
+
+       # added the dropout layer after the last pooling layer based on this 
+       # reference post I read through 
+       # https://saturncloud.io/blog/where-to-add-dropout-in-neural-network/#:~:text=For%20example%2C%20if%20you%20have,the%20size%20of%20your%20dataset.
+
+        self.architecture = [
+            Conv2D(32, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(32, kernel_size=(3,3), activation='relu', padding='same'),
+            MaxPool2D(pool_size=(2,2)),
+            Dropout(0.1),
+
+            Conv2D(64, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(64, kernel_size=(3,3), activation='relu', padding='same'),
+            MaxPool2D(pool_size=(2,2)),
+            Dropout(0.2),
+
+
+            Conv2D(128, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(128, kernel_size=(3,3), activation='relu', padding='same'),
+            MaxPool2D(pool_size=(2,2)),
+            Dropout(0.2),
+
+            Conv2D(256, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(256, kernel_size=(3,3), activation='relu', padding='same'),
+            MaxPool2D(pool_size=(2,2)),
+            Dropout(0.25),
+
+            Conv2D(512, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(512, kernel_size=(3,3), activation='relu', padding='same'),
+            Conv2D(512, kernel_size=(3,3), activation='relu', padding='same'),
+            MaxPool2D(pool_size=(2,2)),
+            Dropout(0.3),
+
+
+            Flatten(),
+
+            Dense(256,activation='relu'),
+            Dropout(0.4),
+            Dense(128,activation='relu'),
+            Dropout(0.4),
+            Dense(15)
+        ]
+
+    def call(self, x):
+        """ Passes input image through the network. """
+
+        for layer in self.architecture:
+            x = layer(x)
+
+        return x
+
+    @staticmethod
+    def loss_fn(labels, predictions):
+        """ Loss function for the model. """
+
+        # TASK 1
+        # TODO: Select a loss function for your network 
+        #       (see the documentation for tf.keras.losses)
+
+        #  Tried using sprse categorical cross entropy. For two or more label classes
+        loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits= True)
+        return loss_function(labels,predictions)
