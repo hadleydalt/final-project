@@ -12,8 +12,8 @@ class UploadFileForm(FlaskForm):
     file = FileField("Upload a Video")
     submit = SubmitField("Upload File")
 
-@app.route("/prediction", methods=['GET',"POST"])
-def process_upload():
+@app.route("/", methods=['GET',"POST"])
+def predict():
     form = UploadFileForm()
     if form.validate_on_submit():
         file = form.file.data
@@ -28,6 +28,14 @@ def process_upload():
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form, file_path=None)
+
+@app.route('/methodology')
+def methodology():
+    return render_template('methodology.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction():

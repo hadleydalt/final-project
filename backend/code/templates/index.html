@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DriveAlive</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    <link rel="stylesheet" href="https://use.typekit.net/fpl5kxl.css">
-    <!--
-      Extrabold: font-weight 800
-      Semibold: font-weight 600
-      Regular: font-weight 400
-      Light: font-weight 300
-    -->
-  </head>
+  {% include 'partials/head.html' %}
   <body>
     <div class="container">
       <div class="topbar">
@@ -24,19 +11,25 @@
         </div>
         <div class="links-container">
           <div class="link-container">
-            <div id="link1" class="link">
-              Predict
-            </div>
+            <a href="/" style="color: black; background: white">
+              <div id="link1" class="link">
+                Predict
+              </div>
+            </a>
           </div>
           <div class="link-container">
-            <div id="link2" class="link">
-              Methodology
-            </div>
+            <a href="/methodology">
+              <div id="link2" class="link">
+                Methodology
+              </div>
+            </a>
           </div>
           <div class="link-container">
-            <div id="link3" class="link">
-              About
-            </div>
+            <a href="/about">
+              <div id="link3" class="link">
+                  About
+              </div>
+          </a>
           </div>
         </div>
       </div>
@@ -68,7 +61,8 @@
 
     {% else %}
       {% if file_path == "" %}
-        <p>Invalid upload. Your upload must be of .mp4 format.</p>
+        <p>Invalid upload. Your upload must be of <b>.mp4 format</b>.</p>
+        {% include 'partials/upload.html' %}
       {% else %}
       <div class="content-splash-wrapper">
         <div class="content-center">
@@ -101,10 +95,7 @@
     {% endif %}
       </div>
     </div>
-    <p>
-    <!--<button onclick="fetch_test()">Display results</button>-->
-    <h2 id="to_change"></h2>
-  </p>
-  <script src="{{url_for('static', filename='index.js')}}"></script>
+  <script src="{{url_for('static', filename='index.js')}}">
+  </script>
   </body>
 </html>

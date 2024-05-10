@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'partials/head.html' %}
+  <body>
+    <div class="container">
+      <div class="topbar">
+        <div class="title-container">
+          <div class="title">
+            DriveAlive
+          </div>
+        </div>
+        <div class="links-container">
+          <div class="link-container">
+            <a href="/">
+              <div id="link1" class="link">
+                Predict
+              </div>
+            </a>
+          </div>
+          <div class="link-container">
+            <a href="/methodology">
+              <div id="link2" class="link">
+                Methodology
+              </div>
+            </a>
+          </div>
+          <div class="link-container">
+            <a href="/about">
+                <div id="link3" class="link" style="color: black; background: white">
+                    About
+                </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="content-result-wrapper">
+          <div class="result-title"><b>03</b> <span style="padding-left: 2%">About</span></div>
+          <div class="results-page">
+            <div class="result-text">
+              <div class="m-text" style="overflow-y:hidden">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+
+            </div>
+            <div class="result-video" style="align-items: flex-start">
+              <img src="../static/images/brown.jpg" class="result-img" alt="brown university">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="{{url_for('static', filename='index.js')}}">
+  </script>
+  </body>
+</html>
