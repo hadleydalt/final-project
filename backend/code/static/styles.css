@@ -187,7 +187,7 @@ a:active {
 
 .result-text {
     height: 100%;
-    width: 40%;
+    width: 45%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,6 +202,7 @@ a:active {
 }
 
 .result-video {
+    width: 45%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -210,6 +211,7 @@ a:active {
 
 .result-img {
     width:30vw;
+    border-radius: 15px;
 }
 
 .result-number {
@@ -232,4 +234,35 @@ a:active {
     height: auto;
     width: 100%;
     padding: 3%;
+}
+
+.m-text {
+    font-size: calc(0.75vh + 0.75vw);
+    width: 100%;
+    height: 100%;
+    overflow-y:scroll;
+    line-height: calc(1.5vh + 1.5vw);
+    padding: 5%;
+}
+
+.m-header {
+    font-weight: 800;
+    margin-top: 10%;
+    font-size: calc(0.8vh + 0.8vw);
+}
+
+.m-text::-webkit-scrollbar {
+    width: 5px; 
+}
+.m-text::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.m-text::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+.m-text::-webkit-scrollbar-thumb:hover {
+    background: #91DFDB; 
+    cursor: pointer;
 }
