@@ -27,14 +27,21 @@ body {
     height: 89.79124vh;
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
-.content-center-wrapper {
+.content-splash-wrapper {
     width: 72%;
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.content-result-wrapper {
+    height: 70%;
+    width: 73%;
 }
 
 .content-center {
@@ -89,10 +96,10 @@ body {
 
 .button-enabled {
     color: black;
-    height: 80%;
+    height: 8vh; /*80%*/
     background: #91DFDB;
     font-size: calc(1.02vh + 1.02vw);
-    width: 40%;
+    width: 18.1vw; /*40%*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,6 +110,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .bold {
@@ -151,23 +159,29 @@ body {
 
 .results-page {
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .result-text {
-    width: 40%;
     height: 100%;
+    width: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
+.result-title {
+    width: 73.5%;
+    height: 10%;
+    text-transform: uppercase;
+    font-size: calc(1.02vh + 1.02vw);
+}
+
 .result-video {
-    width: 40%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -180,9 +194,22 @@ body {
 
 .result-number {
     font-size: calc(8vh + 8vw);
+    line-height: calc(5.5vh + 5.5vw);
+    height: auto;
+    padding: 2%;
 }
 
 .result-message {
     font-size: calc(1.02vh + 1.02vw);
     color: #c4c4c4;
+    height: auto;
+    padding: 2%;
+}
+
+.result-upload-container {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    padding: 3%;
 }

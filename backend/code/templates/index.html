@@ -42,14 +42,20 @@
       </div>
       <div class="content">
         {% if file_path %}
+      
+        <div class="content-result-wrapper">
 
+      <div class="result-title"><b>01</b> <span style="padding-left: 2%">Predict</span></div>
       <div class="results-page">
         <div class="result-text">
           {% if result %}
             <div class="result-number">{{ result }}</div>
             <div class="result-message">Is your likelihood of drowsiness.</div>
+            <div class="result-upload-container">
+              {% include 'partials/upload.html' %}
+            </div>
           {% endif %}
-        </div>
+          </div>
         <div class="result-video">
           <video class="result-img" controls>
             <source src="{{ url_for('static', filename=file_path) }}" type="video/mp4">
@@ -57,13 +63,14 @@
           </video>
         </div>
       </div>
+    </div>
 
 
     {% else %}
       {% if file_path == "" %}
         <p>Invalid upload. Your upload must be of .mp4 format.</p>
       {% else %}
-      <div class="content-center-wrapper">
+      <div class="content-splash-wrapper">
         <div class="content-center">
           <div class="banner">
             <span class="bold">DriveAlive</span> can detect driver drowsiness.
@@ -85,31 +92,7 @@
                 </defs>
                 </svg>
               </div>
-              <form method='POST' enctype="multipart/form-data" class="button-enabled" id="upload-form">
-                {{ form.csrf_token }}
-                {{ form.hidden_tag() }}
-                <div class="button-enabled" style="width:100%">
-                    <input type="file" id="upload-file" name="file" style="display:none">
-                    <label class="button-enabled-label" for="upload-file" id="upload-label">
-                      <p>Upload a Video</p>
-                    </label>
-                    <label class="button-enabled-label" style="width:15%; height:100%" for="upload-file" id="upload-label2">
-                      <svg style="padding-left: 20%" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clip-path="url(#clip0_19_197)">
-                      <path d="M13.5 4.5L11.9138 6.08625L18.1912 12.375H4.5V14.625H18.1912L11.9138 20.9137L13.5 22.5L22.5 13.5L13.5 4.5Z" fill="black"/>
-                      </g>
-                      <defs>
-                      <clipPath id="clip0_19_197">
-                      <rect width="27" height="27" fill="black"/>
-                      </clipPath>
-                      </defs>
-                      </svg>
-                    </label>
-                </div>
-                <div style="display: none;">
-                  {{ form.submit() }}
-              </div>
-            </form>
+              {% include 'partials/upload.html' %}
             </div>
           </div>
         </div>
