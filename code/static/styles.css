@@ -212,6 +212,7 @@ a:active {
 .result-img {
     width:30vw;
     border-radius: 15px;
+    max-height: 80vh;
 }
 
 .result-number {
