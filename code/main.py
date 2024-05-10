@@ -9,6 +9,7 @@ import tensorflow as tf
 
 import hyperparameters as hp
 from model import DDModel
+from facefinder import return_eyes
 from preprocess import Datasets
 from skimage.transform import resize
 from tensorboard_utils import \
@@ -21,9 +22,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-
-
 
 def parse_args():
     """ Perform command-line argument parsing. """
@@ -182,6 +180,8 @@ def test(model, test_data):
 
 
 brute_path = "C:/Users/shnur/OneDrive/Documents/Datasets/USED_DATA/"
+
+
 
 def main():
     """ Main function. """

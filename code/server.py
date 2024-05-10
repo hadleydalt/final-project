@@ -3,6 +3,7 @@ import os
 from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
+from predictor import calc_prediction
 
 app = Flask(__name__) 
 app.config['SECRET_KEY'] = 'shhh'
@@ -25,7 +26,7 @@ def predict():
             if suffix == 'mp4' or suffix == 'mov':
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
                 file_path = "files/" + file.filename
-                result = generate_prediction()
+                result = generate_prediction(file_path)
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form, file_path=None)
@@ -39,7 +40,8 @@ def about():
     return render_template('about.html')
 
 @app.route("/generate", methods=['GET',"POST"])
-def generate_prediction():
+def generate_prediction(path):
+    predict = calc_prediction(path)
     return {"hello":"78%"}
 
 if __name__ == "__main__":
