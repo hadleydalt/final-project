@@ -27,11 +27,15 @@ def predict():
                 result = generate_prediction()
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
-    return render_template('index.html', form=form, file_path=None, page="predict")
+    return render_template('index.html', form=form, file_path=None)
 
 @app.route('/methodology')
 def methodology():
-    return render_template('methodology.html', page="methodology")
+    return render_template('methodology.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction():
