@@ -21,8 +21,8 @@ def predict():
         file_path = ""
         to_print = None
         if len(file.filename) > 3:
-            suffix = file.filename[len(file.filename) - 3:]
-            if suffix == 'mp4':
+            suffix = file.filename[len(file.filename) - 3:].lower()
+            if suffix == 'mp4' or suffix == 'mov':
                 file_path = "files/" + file.filename
                 result = generate_prediction()
                 to_print = result['hello']
