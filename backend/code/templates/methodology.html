@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'partials/head.html' %}
+  <body>
+    <div class="container">
+      <div class="topbar">
+        <div class="title-container">
+          <div class="title">
+            DriveAlive
+          </div>
+        </div>
+        <div class="links-container">
+          <div class="link-container">
+            <a href="/" style="text-decoration: none">
+              <div id="link1" class="link">
+                Predict
+              </div>
+            </a>
+          </div>
+          <div class="link-container">
+            <a href="/methodology" style="color: black; background: white">
+              <div id="link2" class="link">
+                Methodology
+              </div>
+            </a>
+          </div>
+          <div class="link-container">
+            <div id="link3" class="link">
+              About
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="{{url_for('static', filename='index.js')}}">
+  </script>
+  </body>
+</html>
