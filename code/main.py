@@ -180,7 +180,7 @@ def test(model, test_data):
 
 
 brute_path = "C:/Users/shnur/OneDrive/Documents/Datasets/USED_DATA/"
-
+brute_path = "../dataset/USED_DATA"
 
 
 def main():
@@ -189,6 +189,8 @@ def main():
     time_now = datetime.now()
     timestamp = time_now.strftime("%m%d%y-%H%M%S")
     init_epoch = 0
+
+    ARGS.data = brute_path
 
     # If loading from a checkpoint, the loaded checkpoint's directory
     # will be used for future checkpoints
@@ -203,8 +205,10 @@ def main():
     # If paths provided by program arguments are accurate, then this will
     # ensure they are used. If not, these directories/files will be
     # set relative to the directory of main.py
+    print("##########################")
     if os.path.exists(ARGS.data):
         ARGS.data = os.path.abspath(ARGS.data)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!")
     if os.path.exists(ARGS.load_vgg):
         ARGS.load_vgg = os.path.abspath(ARGS.load_vgg)
 
