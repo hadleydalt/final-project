@@ -1,5 +1,12 @@
 # FinalProject_Template
 
+How to Run the Project in a Browser: 
+
+- Cd into the code directory.
+- Run "python server.py"
+- On your web browser, navigate to http://[your IP address or localhost]:5000
+- Enjoy!!
+
 This repository contains templates for CSCI 1430 project deliverables of many kinds: proposals, progress checks, project reports, presentations, posters, etc.
 Each template may not be required for your final project, e.g., some semesters we might not perform presentations. We simply collect them all here for ease.
 
