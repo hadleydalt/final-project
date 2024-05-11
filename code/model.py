@@ -185,7 +185,8 @@ class DDModel(tf.keras.Model):
             Dropout(0.4),
             Dense(128,activation='relu'),
             Dropout(0.4),
-            Dense(15)
+            Dense(15),
+            Dense(1, activation="sigmoid")
         ]
 
     def call(self, x):
