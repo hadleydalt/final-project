@@ -205,5 +205,5 @@ class DDModel(tf.keras.Model):
         #       (see the documentation for tf.keras.losses)
 
         #  Tried using sprse categorical cross entropy. For two or more label classes
-        loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits= True)
+        loss_function = tf.keras.losses.BinaryCrossentropy(from_logits= True)
         return loss_function(labels,predictions)

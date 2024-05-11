@@ -4,7 +4,7 @@ Final Project
 Brown University
 """
 
-num_epochs = 50
+num_epochs = 10
 
 """
 A critical parameter that can dramatically affect whether training
