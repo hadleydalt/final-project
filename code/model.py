@@ -7,9 +7,6 @@ from skimage import io, img_as_ubyte, img_as_float32
 from skimage.transform import rescale
 import matplotlib.pyplot as plt
 import glob
-
-
-import tensorflow as tf
 from keras.layers import \
        Conv2D, MaxPool2D, Dropout, Flatten, Dense, BatchNormalization
 from keras.regularizers import L2, L1
@@ -18,7 +15,6 @@ import hyperparameters as hp
 
 
 #i'm saying 0 is eyes closed, 1 is eyes open
-
 
 class DDModel(tf.keras.Model):
     """neural network model drowsiness-detection. """

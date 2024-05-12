@@ -1,3 +1,4 @@
+import skvideo
 import skvideo.io
 from facefinder import return_eyes
 import numpy as np
@@ -5,8 +6,9 @@ import numpy as np
 
 
 def calc_prediction(path):
+    new_path = "static/" + path
     #Loads the video as an array of images. in the future we should limit the length of video here
-    video_arr = skvideo.io.vread(path)
+    video_arr = skvideo.io.vread(new_path)
     predict_arr = np.zeros(len(video_arr))
     drowsy_threshold = 2
     print(np.shape(video_arr))
@@ -36,10 +38,30 @@ def calc_prediction(path):
     awhile, we return that they're drowsy, but that's much more binary than a percentage drowsiness. Not very interesting, we should discuss
     '''
 
+    '''
+    QUESTION: What if the person were to just blink 3 times or something because they have something in their eye? Or if they are drowsy but just happen to have their eyes open during the frames in question? 
+    - What if we took the 3 images AROUND the beginning, 3 images AROUND the middle, and same for the end, and predicted for each of them, and then returned the average percentage of the 3 for each one (beginning, middle, end)
+    - That way, if the person just happens to blink 3 times, they won't read as drowsy because their averages will still be low 
+    - Example:
+    - Someone who is NOT drowsy but happens to blink in the 3 frames: 
+        - Beginning ((0+0+1)/3 = 0.33) 
+        - Middle ((0+0+1)/3 = 0.33) 
+        - End ((0+0+1)/3 = 0.33)
+    - versus someone who IS drowsy but doesn't happen to blink in any of the frames: 
+        - Beginning ((0.5+0.3+0.6)/3 = 0.47)
+        - Middle ((0.6+0.5+0.6) = 0.56)
+        - End ((0.5+0.3+0.6)/3 = 0.47)
+    - There might be flaws with this, idk
+    '''
+
     return False
 
 
 def get_eye_predict(image):
+    '''
+    So based on get_eye_predict, there are no confidence scores? It's just a drowsiness percentage? 
+    Because if so, can't we average together the percentages and return that to the frontend 
+    '''
     #this is a dummy function. when we have our model done, replace this or any
     #calls to this function with the function to pass in an image and pass back out its classification
     #My base assumptions here: 1 is eyes closed, 0 is eyes open. I understand we're going to get a percentage here.
