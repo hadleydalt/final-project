@@ -1,3 +1,4 @@
+import skvideo
 import skvideo.io
 from facefinder import return_eyes
 import numpy as np
@@ -5,8 +6,9 @@ import numpy as np
 
 
 def calc_prediction(path):
+    new_path = "static/" + path
     #Loads the video as an array of images. in the future we should limit the length of video here
-    video_arr = skvideo.io.vread(path)
+    video_arr = skvideo.io.vread(new_path)
     predict_arr = np.zeros(len(video_arr))
     drowsy_threshold = 2
     print(np.shape(video_arr))

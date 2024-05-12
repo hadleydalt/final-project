@@ -7,9 +7,6 @@ from skimage import io, img_as_ubyte, img_as_float32
 from skimage.transform import rescale
 import matplotlib.pyplot as plt
 import glob
-
-
-import tensorflow as tf
 from keras.layers import \
        Conv2D, MaxPool2D, Dropout, Flatten, Dense, BatchNormalization
 from keras.regularizers import L2, L1
@@ -68,12 +65,12 @@ def trainModel(curr_paths, curr_test_paths):
     n_features = np.shape(x_train)[1]
     print(n_features)
     model = keras.Sequential()
-    model.add(Conv2D(32, (3,3), activation='relu', kernel_initializer='he_uniform', input_shape=in_shape))
-    model.add(MaxPool2D((2, 2)))
-    model.add(Flatten())
-    model.add(Dense(100, activation='relu', kernel_initializer='he_uniform'))
-    model.add(Dropout(0.5))
-    model.add(Dense(len(curr_paths), activation='softmax'))
+    model.add(tf.keras.layers.Conv2D(32, (3,3), activation='relu', kernel_initializer='he_uniform', input_shape=in_shape))
+    model.add(tf.keras.layers.MaxPool2D((2, 2)))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(100, activation='relu', kernel_initializer='he_uniform'))
+    model.add(tf.keras.layers.Dropout(0.5))
+    model.add(tf.keras.layers.Dense(len(curr_paths), activation='softmax'))
 
     print("compiling")
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
