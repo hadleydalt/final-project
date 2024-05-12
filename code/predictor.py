@@ -38,8 +38,6 @@ def calc_prediction(path):
 
     '''
     QUESTION: What if the person were to just blink 3 times or something because they have something in their eye? Or if they are drowsy but just happen to have their eyes open during the frames in question? 
-    - What if we took the 3 images AROUND the beginning, 3 images AROUND the middle, and same for the end, and predicted for each of them, and then returned the highest drowsiness percentage out of the 3 for each one (beginning, middle, end)
-    - There might be flaws with this, idk
     '''
 
     return False
