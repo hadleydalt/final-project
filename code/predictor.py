@@ -36,10 +36,20 @@ def calc_prediction(path):
     awhile, we return that they're drowsy, but that's much more binary than a percentage drowsiness. Not very interesting, we should discuss
     '''
 
+    '''
+    QUESTION: What if the person were to just blink 3 times or something because they have something in their eye? Or if they are drowsy but just happen to have their eyes open during the frames in question? 
+    - What if we took the 3 images AROUND the beginning, 3 images AROUND the middle, and same for the end, and predicted for each of them, and then returned the highest drowsiness percentage out of the 3 for each one (beginning, middle, end)
+    - There might be flaws with this, idk
+    '''
+
     return False
 
 
 def get_eye_predict(image):
+    '''
+    So based on get_eye_predict, there are no confidence scores? It's just a drowsiness percentage? 
+    Because if so, can't we average together the percentages and return that to the frontend 
+    '''
     #this is a dummy function. when we have our model done, replace this or any
     #calls to this function with the function to pass in an image and pass back out its classification
     #My base assumptions here: 1 is eyes closed, 0 is eyes open. I understand we're going to get a percentage here.

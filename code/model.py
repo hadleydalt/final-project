@@ -68,12 +68,12 @@ def trainModel(curr_paths, curr_test_paths):
     n_features = np.shape(x_train)[1]
     print(n_features)
     model = keras.Sequential()
-    model.add(layers.Conv2D(32, (3,3), activation='relu', kernel_initializer='he_uniform', input_shape=in_shape))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Flatten())
-    model.add(layers.Dense(100, activation='relu', kernel_initializer='he_uniform'))
-    model.add(layers.Dropout(0.5))
-    model.add(layers.Dense(len(curr_paths), activation='softmax'))
+    model.add(Conv2D(32, (3,3), activation='relu', kernel_initializer='he_uniform', input_shape=in_shape))
+    model.add(MaxPool2D((2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu', kernel_initializer='he_uniform'))
+    model.add(Dropout(0.5))
+    model.add(Dense(len(curr_paths), activation='softmax'))
 
     print("compiling")
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
