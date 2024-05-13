@@ -6,9 +6,9 @@ from model import DDModel
 from skimage.transform import resize
 
 
-#model = DDModel()
-#model.built = True
-#model.load_weights("./testing/your.weights.e009-acc0.9935.h5", by_name=False)
+model = DDModel()
+model.built = True
+model.load_weights("./testing/your.weights.e009-acc0.9935.h5", by_name=False)
 def calc_prediction(path):
     print('starting')
     new_path = path  #"static/" + path
