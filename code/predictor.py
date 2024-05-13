@@ -1,5 +1,8 @@
 import skvideo
+import os
 import skvideo.io
+import glob
+import imageio
 from facefinder import return_eyes
 import numpy as np
 from model import DDModel
@@ -12,11 +15,22 @@ model = DDModel()
 model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
 model.built = True
 model.load_weights("./checkpoints/DD_model/weighty.h5")
+frame_path = "../temp_frame_storage/"
+
 def calc_prediction(path):
     print('starting')
     new_path = path  #"static/" + path
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(new_path)
+
+    existing_image_files = glob.glob(frame_path + "*")
+    for f in existing_image_files:
+        os.remove(f)
+    for frame_i in range(len(video_arr)):
+        frame_name = frame_path + "_frame_%d.png" % frame_i
+        imageio.write(frame_name, video_arr(frame_i))
+
+
     predict_arr = np.zeros(len(video_arr))
     blink_counter = 0
     blink_switch = True
@@ -70,4 +84,4 @@ def get_eye_predict(image):
 
     return 87
 
-calc_prediction("C:/Users/shnur/OneDrive/Desktop/CS1430/CS1430_Projects/final-project/code/testing/pogBlink.MOV")
+calc_prediction("./testing/pogBlink.MOV")
