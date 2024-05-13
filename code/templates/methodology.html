@@ -39,12 +39,16 @@
           <div class="results-page">
             <div class="result-text">
               <div class="m-text">
-                <div class="m-header" style="margin-top: 0">I. Title One</div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <div class="m-header">II. Title Two</div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                <div class="m-header">III. Title Three</div>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <div class="m-header" style="margin-top: 0">What Does My Score Mean?</div>
+                Your score represents how many blinks per minute you showed in the submitted video clip. 
+                <div style="height: 8%"></div>
+                <div><span style="color: #8CEF69; font-weight: bold; font-size: calc(1.02vh + 1.02vw); padding-right: 3%">1</span>A score of 1 means that you showed <b>less than 1 drowsy blink per minute</b>.</div> 
+                <div><span style="color: #EFB869; font-weight: bold; font-size: calc(1.02vh + 1.02vw); padding-right: 3%">2</span>A score of 2 means that you showed <b>between 1 and 4 drowsy blinks per minute</b>.</div>
+                <div><span style="color: #EF7369; font-weight: bold; font-size: calc(1.02vh + 1.02vw); padding-right: 3%">3</span>A score of 3 means that you showed <b>over 4 drowsy blinks per minute</b>.</div>
+                <div class="m-header">What Research Supports This?</div>
+                <a style="color:#91DFDB; font-weight:500" href="https://ieeexplore.ieee.org/document/9734801">Research from American University</a> reveals an unexpected finding: contrary to common belief, the eyes of a drowsy individual blink less frequently than the norm. However, this phenomenon occurs because most instances of eye closure persist for longer durations. At DriveAlive, we term these "drowsy blinks," and these prolonged eye closures are indicative of fatigue. In our methodology, we aggregate these instances to calculate a drowsiness score.
+                <div class="m-header">How Does That Work?</div>
+                We've used cutting-edge machine learning technology to determine how many "drowsy blinks" you exhibited in a short, seconds-long clip. First, the system identifies the face area in every frame of the video within each second. Then, it pinpoints the eye area using a facial landmarks detector. Next, it calculates and analyzes the eye aspect ratio for each frame. Afterward, three types of classifiers—linear SVM and sequential neural network—are used to enhance accuracy. The data is then classified to determine whether the driver's eyes are open or closed. The system detects closed eyes for a set period within each second, tallying the amount of drowsy blinks persisting within or throughout the seconds. The amount of drowsy blinks per minute is then quantified. More than even one drowsy blink should urge you to reconsider driving!
               </div>
 
             </div>
