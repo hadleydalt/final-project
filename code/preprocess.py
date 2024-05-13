@@ -27,6 +27,7 @@ class Datasets():
         # Mean and std for standardization
         self.mean = np.zeros((hp.img_size,hp.img_size,3))
         self.std = np.ones((hp.img_size,hp.img_size,3))
+        
         self.calc_mean_and_std()
 
         # Setup data generators
