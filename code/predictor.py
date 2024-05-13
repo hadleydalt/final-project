@@ -30,6 +30,7 @@ def calc_prediction(path):
             predict_1 = get_eye_predict(resize(eye_1, (64, 64)))
             predict_2 = get_eye_predict(resize(eye_2, (64, 64)))
 
+
             predict_arr[i] = (predict_1 + predict_2)/2 #not sure how we want to deal with the percentage of one eye closed vs the other here. Do we average them like I'm doing here?
 
             if(i > 13):                             #this is for getting N-7, N+7, and N
