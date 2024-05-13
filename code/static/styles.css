@@ -248,12 +248,16 @@ a:active {
     overflow-y:scroll;
     line-height: calc(1.5vh + 1.5vw);
     padding: 5%;
+    padding-right: 10%;
 }
 
 .m-header {
-    font-weight: 800;
     margin-top: 10%;
-    font-size: calc(0.8vh + 0.8vw);
+    margin-bottom: 5%;
+    background: rgb(145,223,219,0.4);
+    /*background: linear-gradient(90deg, rgba(145,223,219,1) 0%, rgba(255,255,255,0.0) 100%); */
+    color: rgba(255, 255, 255, 0.8);
+    padding: 2%;
 }
 
 .m-text::-webkit-scrollbar {
