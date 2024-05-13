@@ -27,6 +27,7 @@ class Datasets():
         # Mean and std for standardization
         self.mean = np.zeros((hp.img_size,hp.img_size,3))
         self.std = np.ones((hp.img_size,hp.img_size,3))
+        
         self.calc_mean_and_std()
 
         # Setup data generators
@@ -49,7 +50,7 @@ class Datasets():
         file_list = []
         for root, _, files in os.walk(os.path.join(self.data_path, "train/")):
             for name in files:
-                if name.endswith(".jpg"):
+                if name.endswith(".png"):
                     file_list.append(os.path.join(root, name))
 
         # Shuffle filepaths
@@ -118,6 +119,11 @@ class Datasets():
         else:
             img = img / 255.
             img = self.standardize(img)
+        return img
+    
+    def vid_preprocess(self, img):
+        img = img/255.
+        img = self.standardize(img)
         return img
 
     def custom_preprocess_fn(self, img):

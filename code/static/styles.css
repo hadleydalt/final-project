@@ -269,6 +269,7 @@ a:active {
     overflow-y:scroll;
     line-height: calc(1.5vh + 1.5vw);
     padding: 5%;
+    padding-right: 10%;
 }
 
 .m-header {

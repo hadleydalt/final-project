@@ -55,9 +55,9 @@ def about():
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction(path):
     '''Disabling calc_prediction call FOR NOW because it was confusing the program, since it's not fully built yet!!'''
-    # predict = calc_prediction(path)
-    #return {"hello":"78%"}
-    return {"blinks":3, "time":3.35}
+    #return {"blinks":3, "time":3.35}
+    counter, time = calc_prediction(path)
+    return {"blinks":counter, "time":time}
 
 if __name__ == "__main__":
     app.run(debug=True)
