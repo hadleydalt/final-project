@@ -39,6 +39,9 @@ def calc_prediction(path):
     '''
 
     # returns # of blinks over period of time 
+    # in methodology tab, explain the standards of measurement (level one = x blinks per minute)
+    # determine thresholds for each level (once healey codes it)
+    # in immediate frontend, just display the number of blinks and number of time
 
     return False
 
