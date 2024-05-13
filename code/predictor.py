@@ -11,7 +11,7 @@ from skimage.transform import resize
 #model.load_weights("./testing/your.weights.e009-acc0.9935.h5", by_name=False)
 def calc_prediction(path):
     print('starting')
-    new_path = "static/" + path
+    new_path = path  #"static/" + path
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(new_path)
     predict_arr = np.zeros(len(video_arr))
