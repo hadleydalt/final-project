@@ -211,6 +211,7 @@ a:active {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .result-img {
@@ -220,10 +221,17 @@ a:active {
 }
 
 .result-number {
-    font-size: calc(8vh + 8vw);
-    line-height: calc(5.5vh + 5.5vw);
-    height: auto;
-    padding: 2%;
+    font-size: calc(9vh + 9vw);
+    /*line-height: calc(5.5vh + 5.5vw); */
+    width: calc(5.5vh + 5.5vw);
+    height: calc(5.5vh + 5.5vw);
+    border-radius: 100%;
+    padding: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 1vh;
 }
 
 .result-message {
@@ -231,6 +239,19 @@ a:active {
     color: #c4c4c4;
     height: auto;
     padding: 2%;
+    text-align: center;
+}
+
+.result-sub-message {
+    font-size: calc(0.8vh + 0.8vw);
+    color: #c4c4c4;
+    text-align: center;
+    height: 1vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    padding: 3%;
 }
 
 .result-upload-container {
@@ -251,9 +272,12 @@ a:active {
 }
 
 .m-header {
-    font-weight: 800;
     margin-top: 10%;
-    font-size: calc(0.8vh + 0.8vw);
+    color: rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: calc(0.7vh + 0.7vw);
+    letter-spacing: 0.2vw;
 }
 
 .m-text::-webkit-scrollbar {
