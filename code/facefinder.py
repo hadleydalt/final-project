@@ -1,6 +1,7 @@
 import dlib
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
 
 #Takes in an input image (NOT A PATH, but we can discuss this) and returns the face and eyes in (x, y, width, height) format for each
 def return_eyes(input_image):
@@ -32,4 +33,6 @@ def return_eyes(input_image):
     #plt.imshow(cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB))
     #plt.axis('off')
     #plt.show()
-    return face_list[0], eye_list[0], eye_list[1]
+    if  (len(face_list) < 1) or (len(eye_list) < 2):
+        return None, None, None
+    return face_list[0], np.resize(eye_list[0]), eye_list[1]

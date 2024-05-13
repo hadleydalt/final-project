@@ -179,9 +179,7 @@ def test(model, test_data):
     )
 
 
-brute_path = "C:/Users/shnur/OneDrive/Documents/Datasets/USED_DATA/"
-brute_path = "../dataset/USED_DATA"
-
+brute_path = "../dataset/USED_DATA/"
 
 def main():
     """ Main function. """
@@ -215,7 +213,7 @@ def main():
     # Run script from location of main.py
     os.chdir(sys.path[0])
 
-    datasets = Datasets(ARGS.data, ARGS.task)  #changed from ARGS.data to brute_path for initial creation
+    datasets = Datasets(brute_path, ARGS.task)  #changed from ARGS.data to brute_path for initial creation
 
     if ARGS.task == '1':
         model = DDModel()
@@ -258,7 +256,7 @@ def main():
     model.compile(
         optimizer=model.optimizer,
         loss=model.loss_fn,
-        metrics=["sparse_categorical_accuracy"])
+        metrics=["accuracy"])
 
     if ARGS.evaluate:
         test(model, datasets.test_data)

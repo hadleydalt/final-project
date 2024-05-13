@@ -27,6 +27,7 @@ def predict():
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
                 file_path = "files/" + file.filename
                 result = generate_prediction(file_path)
+                #HADLEY NOTE TO SELF: change this whole shebang 
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form, file_path=None)
@@ -42,8 +43,8 @@ def about():
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction(path):
     '''Disabling calc_prediction call FOR NOW because it was confusing the program, since it's not fully built yet!!'''
-    # predict = calc_prediction(path)
-    return {"hello":"78%"}
+    counter, time = calc_prediction(path)
+    return {"blinks":counter, "time":time}
 
 if __name__ == "__main__":
     app.run(debug=True)
