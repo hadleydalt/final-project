@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
+l1 = 20.0
+l2 = 25.0
+l3 = 27.0
+
 class UploadFileForm(FlaskForm):
     file = FileField("Upload a Video")
     submit = SubmitField("Upload File")
@@ -27,9 +31,17 @@ def predict():
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
                 file_path = "files/" + file.filename
                 result = generate_prediction(file_path)
-                #HADLEY NOTE TO SELF: change this whole shebang 
-                to_print = result['hello']
-        return render_template('index.html', form=form, result=to_print, file_path=file_path) 
+                blinks = result['blinks']
+                time = result['time']
+                bpm = (blinks * 60.0) / time
+                if bpm <= l1:
+                    level = "1"
+                elif bpm <= l2:
+                    level = "2"
+                else:
+                    level = "3"
+                #to_print = result['hello']
+        return render_template('index.html', form=form, file_path=file_path, level=level, blinks=blinks, time=time) 
     return render_template('index.html', form=form, file_path=None)
 
 @app.route('/methodology')
@@ -43,6 +55,7 @@ def about():
 @app.route("/generate", methods=['GET',"POST"])
 def generate_prediction(path):
     '''Disabling calc_prediction call FOR NOW because it was confusing the program, since it's not fully built yet!!'''
+    #return {"blinks":3, "time":3.35}
     counter, time = calc_prediction(path)
     return {"blinks":counter, "time":time}
 

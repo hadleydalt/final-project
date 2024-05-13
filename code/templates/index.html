@@ -41,12 +41,36 @@
       <div class="result-title"><b>01</b> <span style="padding-left: 2%">Predict</span></div>
       <div class="results-page">
         <div class="result-text">
-          {% if result %}
-            <div class="result-number">{{ result }}</div>
-            <div class="result-message">Is your likelihood of drowsiness.</div>
-            <div class="result-upload-container">
-              {% include 'partials/upload.html' %}
+          {% if level %}
+            {% if level == "1" %}
+              <div class="result-number" style="background: #8CEF69">1</div>
+              <div class="result-message">Is your level of drowsiness. You are cleared to drive!</div>
+            {% endif %}
+            {% if level == "2" %}
+              <div class="result-number" style="background: #EFB869">2</div>
+              <div class="result-message">Is your level of drowsiness. You are strongly advised to reconsider driving!</div>
+            {% endif %}
+            {% if level == "3" %}
+              <div class="result-number" style="background: #EF7369">3</div>
+              <div class="result-message">Is your level of drowsiness. You are NOT cleared to drive! Please find another driver.</div>
+            {% endif %}
+            <a href="/methodology" style="width: 100%">
+            <div class="result-sub-message">
+              <svg style="padding-right: 2%" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_88_2)">
+                <path d="M11 0C4.92465 0 0 4.92465 0 11C0 17.0753 4.92465 22 11 22C17.0753 22 22 17.0753 22 11C22 4.92465 17.0753 0 11 0ZM11 4.30435C11.7925 4.30435 12.4348 4.94665 12.4348 5.73913C12.4348 6.53161 11.7925 7.17391 11 7.17391C10.2075 7.17391 9.56522 6.53161 9.56522 5.73913C9.56522 4.94665 10.2075 4.30435 11 4.30435ZM12.913 17.2174H11.9565H10.0435H9.08696V16.2609H10.0435V10.0435H9.08696V9.08696H10.0435H11.9565V10.0435V16.2609H12.913V17.2174Z" fill="#C4C4C4"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_88_2">
+                <rect width="22" height="22" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+                
+                
+              How is this calculated?
             </div>
+          </a>
           {% endif %}
           </div>
         <div class="result-video">
@@ -54,6 +78,9 @@
             <source src="{{ url_for('static', filename=file_path) }}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
+          <div class="result-upload-container">
+            {% include 'partials/upload.html' %}
+          </div>
         </div>
       </div>
     </div>
