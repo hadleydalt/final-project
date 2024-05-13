@@ -179,9 +179,7 @@ def test(model, test_data):
     )
 
 
-brute_path = "C:/Users/shnur/OneDrive/Documents/Datasets/USED_DATA/"
-brute_path = "../dataset/USED_DATA"
-
+brute_path = "/Users/davesong/Desktop/CS1430/final-project/dataset/USED_DATA"
 
 def main():
     """ Main function. """
@@ -258,7 +256,7 @@ def main():
     model.compile(
         optimizer=model.optimizer,
         loss=model.loss_fn,
-        metrics=["sparse_categorical_accuracy"])
+        metrics=["accuracy"])
 
     if ARGS.evaluate:
         test(model, datasets.test_data)
