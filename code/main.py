@@ -179,7 +179,7 @@ def test(model, test_data):
     )
 
 
-brute_path = "../dataset/USED_DATA/"
+brute_path = "../dataset/NEW_DATA/"
 
 def main():
     """ Main function. """

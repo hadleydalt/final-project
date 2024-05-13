@@ -4,11 +4,14 @@ from facefinder import return_eyes
 import numpy as np
 from model import DDModel
 from skimage.transform import resize
+import tensorflow as tf
+import hyperparameters as hp
 
 
-#model = DDModel()
-#model.built = True
-#model.load_weights("./testing/your.weights.e009-acc0.9935.h5")
+model = DDModel()
+model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
+model.built = True
+model.load_weights("./checkpoints/DD_model/weighty.h5")
 def calc_prediction(path):
     print('starting')
     new_path = path  #"static/" + path

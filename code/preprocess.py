@@ -119,6 +119,11 @@ class Datasets():
             img = img / 255.
             img = self.standardize(img)
         return img
+    
+    def vid_preprocess(self, img):
+        img = img/255.
+        img = self.standardize(img)
+        return img
 
     def custom_preprocess_fn(self, img):
         """ Custom preprocess function for ImageDataGenerator. """
