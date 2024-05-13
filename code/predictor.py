@@ -3,7 +3,6 @@ import os
 import skvideo.io
 import glob
 from facefinder import return_eyes
-from preprocess import vid_preprocess
 import numpy as np
 from model import DDModel
 from preprocess import Datasets
@@ -29,21 +28,6 @@ def calc_prediction(path):
     new_path = path  #"static/" + path
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(new_path)
-    processed_video = preprocess_image_set(video_arr)
-
-    existing_image_files = glob.glob(frame_path + "*")
-    #for f in existing_image_files:
-    #    os.remove(f)
-
-    #vidcap = cv2.VideoCapture(path)
-    #success,image = vidcap.read()
-    #count = 0
-    #while success:
-     #   cv2.imwrite(frame_path + "frame%d.jpg" % count, image)     # save frame as JPEG file      
-      #  success,image = vidcap.read()
-       # print('Read a new frame: ', success)
-        #count += 1
-
 
     predict_arr = np.zeros(len(video_arr))
     blink_counter = 0
@@ -58,40 +42,29 @@ def calc_prediction(path):
         image = video_arr[i]
         face, eye_1, eye_2 = return_eyes(image)
         if(face != None):
-            eye_1_arr.append(eye_1)
-            eye_2_arr.append(eye_2)
+            eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
+            eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
+        print(i)
 
-    existing_image_files_1 = glob.glob(frame_path + "eye_1/" + "*")
-    existing_image_files_2 = glob.glob(frame_path + "eye_2" + "*")
-    
-    for f in existing_image_files_1:
-        os.remove(f)
-    for f in existing_image_files_2:
-        os.remove(f)
-
-    for j in range(0,len(eye_1_arr)):
-        cv2.imwrite(frame_path + "eye_1/" "frame%d.jpg" % j, eye_1_arr[j])     # save frame as JPEG file  
-        cv2.imwrite(frame_path + "eye_2/" + "frame%d.jpg" % j, eye_1_arr[j])     # save frame as JPEG file      
-        print('Read a new frame: ', j)
-    
     eye_1_arr = preprocess_image_set(eye_1_arr)
     eye_2_arr = preprocess_image_set(eye_2_arr)
     print("predicting eye_1")
+    print(np.shape(eye_1_arr))
     print(model.predict(eye_1_arr))
     print("predicting eye_2")
     
-    time =2
-    print(time)
     print("ending")
+    time = len(video_arr)/24
     return blink_counter, time 
 
 
 def preprocess_image_set(data):
+
+    data = np.array(data, dtype=np.float32)
+    data /=  255.
     mean = np.mean(data, axis=0)
     std = np.std(data, axis=0)
-
-    data = np.divide(data, 255)
-    data = (data/mean) / std
+    data = (data-mean) / std
     return data
 
 def get_eye_predict(image):
