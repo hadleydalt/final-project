@@ -27,6 +27,7 @@ def predict():
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
                 file_path = "files/" + file.filename
                 result = generate_prediction(file_path)
+                #HADLEY NOTE TO SELF: change this whole shebang 
                 to_print = result['hello']
         return render_template('index.html', form=form, result=to_print, file_path=file_path) 
     return render_template('index.html', form=form, file_path=None)

@@ -46,7 +46,7 @@ def calc_prediction(path):
     time = len(predict_arr)/24
     print(time)
     print("ending")
-    return blink_counter, time
+    return blink_counter, time 
 
 
 def get_eye_predict(image):
