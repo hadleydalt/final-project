@@ -12,7 +12,6 @@ import tensorflow as tf
 import hyperparameters as hp
 import cv2
 
-
 model = DDModel()
 model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
 model.built = True
@@ -21,7 +20,6 @@ model.load_weights("./checkpoints/DD_model/weighty.h5")
 frame_path = "../temp_frame_storage/"
 training_img_path = "../dataset/USED_DATA/train/Closed_Eyes/"
 mean_and_std_path = "../mean_and_std/"
-
 
 def mean_and_std(path):
     img_list = []
@@ -59,7 +57,6 @@ def load_mean_and_std():
 
     return l_mean, l_std
     
-
 def calc_prediction(path):
     print('starting')
 
@@ -79,8 +76,9 @@ def calc_prediction(path):
         image = video_arr[i]
         face, eye_1 = return_eyes(image)
         #if(eye_1 != None):
-        eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
-            #eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
+        if eye_1 is not None:
+            eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
+                #eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
         print(i)
 
     mean, std = load_mean_and_std()
@@ -90,9 +88,9 @@ def calc_prediction(path):
     print("predicting eye_1")
     output_arr = model.predict(eye_1_arr)
     print("predicting eye_2")
-    #print(eye_1_arr)
-    for i in range(len(output_arr)):
-        print(str(i) + " is equal to " + str(np.round(output_arr[i])))
+    #print(output_arr)
+    #for i in range(len(output_arr)):
+        #print(str(i) + " is equal to " + str(np.round(output_arr[i])))
     
     print("ending")
     #print(std)
@@ -100,8 +98,8 @@ def calc_prediction(path):
     time = len(video_arr)/30.
     return blink_counter(output_arr), time 
 
-
 def preprocess_image_set(data, mean, std):
+
 
     data = np.array(data, dtype=np.float32)
     data /=  255.
@@ -119,24 +117,26 @@ def preprocess_image_set(data, mean, std):
 
 #1 is open, 0 is closed
 def blink_counter(data):
-    predict_arr = np.zeros(len(data))
+    predict_arr = np.round(data)
     blink_counter = 0
+    blink_length = 0
     blink_switch = True
 
     for i in range(len(data)):
-        if(i > 13):                             #this is for getting N-7, N+7, and N
-            before_predict = predict_arr[i-14]
-            middle_predict = predict_arr[i-7]
-            after_predict = predict_arr[i]
-            
-            if(before_predict + middle_predict + after_predict) < 1:
-                print("check for blink")
-                if(blink_switch == True):
-                    blink_counter += 1
+        if(i > 6):                             #this is for getting N-7, N+7, and N
+            middle_predict = predict_arr[i]
+            if(middle_predict == 0.):
+                blink_length += 1
+                if ((blink_length > 14) and (blink_switch)):
                     blink_switch = False
+                    blink_counter += 1
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~BLINK~~~~~~~~~~~~~~~~~~~~~")
             else:
+                blink_length = 0
                 blink_switch = True
+            
+            print(str(i), ", ", blink_switch, ", ", blink_length, ",", blink_counter, " : ", middle_predict)
     return blink_counter
 
-#blink, time = calc_prediction("./testing/3_blinks.MOV")
-#print("blink is ", str(blink))
+blink, time = calc_prediction("./testing/3_blinks.MOV")
+print("blink is ", str(blink))

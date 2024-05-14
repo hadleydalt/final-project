@@ -25,7 +25,8 @@ def return_eyes(input_image):
         eyes = eye_cascade.detectMultiScale(j_face, minSize=(60,60))
         for (ex, ey, ew, eh) in eyes:
             cv2.rectangle(input_image, (x + ex, y + ey), (x + ex + ew, y + ey + eh), (255,0,0), 2)
-            eye_list.append(j_face[ey:ey+eh, ex:ex+ew])
+            eye_list.append(j_face[ey:ey+eh, ex:ex+ew]) 
+            
 
     #plt.imshow(input_image, cmap='gray')
     #plt.axis('off')
