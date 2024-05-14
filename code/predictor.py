@@ -65,7 +65,7 @@ def calc_prediction(path):
 
     eye_1_arr = []
 
-    #path = "static" + os.sep + path
+    path = "static" + os.sep + path
 
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(path)

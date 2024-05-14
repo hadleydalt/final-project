@@ -9,9 +9,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'shhh'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
-l1 = 20.0
-l2 = 25.0
-l3 = 27.0
+l1 = 0.0
+l2 = 1.0
+l3 = 3.0
 
 class UploadFileForm(FlaskForm):
     file = FileField("Upload a Video")
@@ -29,7 +29,7 @@ def predict():
             suffix = file.filename[len(file.filename) - 3:].lower()
             if suffix == 'mp4' or suffix == 'mov':
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
-                file_path = "files/" + file.filename
+                file_path = "files" + os.sep + file.filename
                 result = generate_prediction(file_path)
                 blinks = result['blinks']
                 time = result['time']
