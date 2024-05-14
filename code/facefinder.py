@@ -13,7 +13,7 @@ def return_eyes(input_image):
 
     #converts our image to rgb, which dlib likes more
     c_image = input_image
-    d_faces = f_detector.detectMultiScale(c_image,)
+    d_faces = f_detector.detectMultiScale(c_image, minSize=(60,60))
 
     for (x,y,w,h) in d_faces: #theoretically this supports multiple faces, but we only really want to detect one. we should have a system in place for 1) too many faces and 2) no faces
 
@@ -22,14 +22,14 @@ def return_eyes(input_image):
 
         #cuts out just the face for eye detection
         j_face = input_image[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(j_face)
+        eyes = eye_cascade.detectMultiScale(j_face, minSize=(60,60))
         for (ex, ey, ew, eh) in eyes:
             cv2.rectangle(input_image, (x + ex, y + ey), (x + ex + ew, y + ey + eh), (255,0,0), 2)
             eye_list.append(j_face[ey:ey+eh, ex:ex+ew])
 
-    #plt.imshow(input_image, cmap='gray')
-    #plt.axis('off')
-    #plt.show()
+    plt.imshow(input_image, cmap='gray')
+    plt.axis('off')
+    plt.show()
     if  (len(face_list) < 1) or (len(eye_list) < 2):
-        return None, None, None
-    return face_list[0], eye_list[0], eye_list[1]
+        return None, None
+    return face_list[0], eye_list[0]
