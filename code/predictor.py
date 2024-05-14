@@ -65,7 +65,7 @@ def calc_prediction(path):
 
     eye_1_arr = []
 
-    path = "static" + os.sep + path
+    #path = "static" + os.sep + path
 
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(path)
@@ -90,9 +90,9 @@ def calc_prediction(path):
     print("predicting eye_1")
     output_arr = model.predict(eye_1_arr)
     print("predicting eye_2")
-    #print(eye_1_arr)
-    for i in range(len(output_arr)):
-        print(str(i) + " is equal to " + str(np.round(output_arr[i])))
+    #print(output_arr)
+    #for i in range(len(output_arr)):
+        #print(str(i) + " is equal to " + str(np.round(output_arr[i])))
     
     print("ending")
     #print(std)
@@ -119,7 +119,7 @@ def preprocess_image_set(data, mean, std):
 
 #1 is open, 0 is closed
 def blink_counter(data):
-    predict_arr = np.zeros(len(data))
+    predict_arr = np.round(data)
     blink_counter = 0
     blink_switch = True
 
@@ -130,13 +130,15 @@ def blink_counter(data):
             after_predict = predict_arr[i]
             
             if(before_predict + middle_predict + after_predict) < 1:
-                print("check for blink")
+                #print("check for blink")
                 if(blink_switch == True):
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BLINK")
                     blink_counter += 1
                     blink_switch = False
             else:
                 blink_switch = True
+            print(str(i), ", ", blink_switch, ", ", (before_predict + middle_predict + after_predict))
     return blink_counter
 
-#blink, time = calc_prediction("./testing/3_blinks.MOV")
-#print("blink is ", str(blink))
+blink, time = calc_prediction("./testing/3_blinks.MOV")
+print("blink is ", str(blink))
