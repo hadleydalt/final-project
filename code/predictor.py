@@ -79,10 +79,10 @@ def calc_prediction(path):
         print("VIDEO IS TOO SHORT!")
     for i in range(0,len(video_arr)):
         image = video_arr[i]
-        face, eye_1, eye_2 = return_eyes(image)
-        if(face != None):
-            eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
-            eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
+        face, eye_1 = return_eyes(image)
+        #if(eye_1 != None):
+        eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
+            #eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
         print(i)
 
     mean, std = load_mean_and_std()
@@ -119,24 +119,6 @@ def preprocess_image_set(data, mean, std):
     data = (data-mean) / std
     return data
 
-def get_eye_predict(image):
-    '''
-    So based on get_eye_predict, there are no confidence scores? It's just a drowsiness percentage? 
-    Because if so, can't we average together the percentages and return that to the frontend 
-    '''
-    #this is a dummy function. when we have our model done, replace this or any
-    #calls to this function with the function to pass in an image and pass back out its classification
-    #My base assumptions here: 1 is eyes closed, 0 is eyes open. I understand we're going to get a percentage here.
-
-
-    #y = model(image, training=False)
-    #print("Result is ")
-    #print(y)
-    #print("~~~~~~~~~~~~~~~~~~~~~~~~")
-
-    return 87
-
-
 #1 is open, 0 is closed
 def blink_counter(data):
     predict_arr = np.zeros(len(data))
@@ -150,13 +132,14 @@ def blink_counter(data):
             middle_predict = predict_arr[i-7]
             after_predict = predict_arr[i]
             
-            if(before_predict + middle_predict + after_predict) == 0:
-                if(blink_switch):
+            if(before_predict + middle_predict + after_predict) < 1:
+                print("check for blink")
+                if(blink_switch == True):
                     blink_counter += 1
                     blink_switch = False
             else:
                 blink_switch = True
     return blink_counter
 
-blink, time = calc_prediction("./testing/LongBlink.MOV")
+blink, time = calc_prediction("./testing/3_blinks.MOV")
 print("blink is ", str(blink))
