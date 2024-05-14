@@ -28,9 +28,9 @@ def return_eyes(input_image):
             eye_list.append(j_face[ey:ey+eh, ex:ex+ew]) 
             
 
-    plt.imshow(input_image, cmap='gray')
-    plt.axis('off')
-    plt.show()
+    #plt.imshow(input_image, cmap='gray')
+    #plt.axis('off')
+    #plt.show()
     if  (len(face_list) < 1) or (len(eye_list) < 2):
         return None, None
     return face_list[0], eye_list[0]
