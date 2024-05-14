@@ -65,7 +65,7 @@ def calc_prediction(path):
 
     eye_1_arr = []
 
-    #path = "static" + os.sep + path
+    path = "static" + os.sep + path
 
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(path)
@@ -79,8 +79,9 @@ def calc_prediction(path):
         image = video_arr[i]
         face, eye_1 = return_eyes(image)
         #if(eye_1 != None):
-        eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
-            #eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
+        if eye_1 is not None:
+            eye_1_arr.append(resize(eye_1,(hp.img_size, hp.img_size, 3), preserve_range=True))
+                #eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
         print(i)
 
     mean, std = load_mean_and_std()
@@ -121,23 +122,23 @@ def preprocess_image_set(data, mean, std):
 def blink_counter(data):
     predict_arr = np.round(data)
     blink_counter = 0
+    blink_length = 0
     blink_switch = True
 
     for i in range(len(data)):
-        if(i > 13):                             #this is for getting N-7, N+7, and N
-            before_predict = predict_arr[i-14]
-            middle_predict = predict_arr[i-7]
-            after_predict = predict_arr[i]
-            
-            if(before_predict + middle_predict + after_predict) < 1:
-                #print("check for blink")
-                if(blink_switch == True):
-                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BLINK")
-                    blink_counter += 1
+        if(i > 6):                             #this is for getting N-7, N+7, and N
+            middle_predict = predict_arr[i]
+            if(middle_predict == 0.):
+                blink_length += 1
+                if ((blink_length > 14) and (blink_switch)):
                     blink_switch = False
+                    blink_counter += 1
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~BLINK~~~~~~~~~~~~~~~~~~~~~")
             else:
+                blink_length = 0
                 blink_switch = True
-            print(str(i), ", ", blink_switch, ", ", (before_predict + middle_predict + after_predict))
+            
+            print(str(i), ", ", blink_switch, ", ", blink_length, ",", blink_counter, " : ", middle_predict)
     return blink_counter
 
 blink, time = calc_prediction("./testing/3_blinks.MOV")
