@@ -1,5 +1,6 @@
 import skvideo
 import os
+from skimage import io
 import skvideo.io
 import glob
 from facefinder import return_eyes
@@ -18,6 +19,48 @@ model.built = True
 model.load_weights("./checkpoints/DD_model/weighty.h5")
 
 frame_path = "../temp_frame_storage/"
+training_img_path = "../dataset/USED_DATA/train/Closed_Eyes/"
+mean_and_std_path = "../mean_and_std/"
+
+
+def mean_and_std(path):
+    img_list = []
+    for filename in os.listdir(path):
+        cur_img = io.imread(training_img_path + filename)
+        cur_img = np.stack([cur_img, cur_img, cur_img], axis=-1)
+        cur_img = resize(cur_img,(hp.img_size, hp.img_size, 3), preserve_range=True)
+        
+        img_list.append(cur_img/255.)
+
+    mean = np.zeros((hp.img_size,hp.img_size,3))
+    std = np.ones((hp.img_size,hp.img_size,3))
+
+    print(np.shape(img_list))
+    img_list = np.array(img_list)
+    print(np.shape(img_list[0]))
+
+    for channel in range(3):
+        std[:, :, channel] = np.std(img_list[:, :, :, channel], axis=0)
+        mean[:, :, channel] = np.mean(img_list[:, :, :, channel], axis=0)
+
+    a_mean = mean.reshape(mean.shape[0], -1)
+    a_std = std.reshape(std.shape[0], -1)
+    np.savetxt(mean_and_std_path + "mean.txt", a_mean)
+    np.savetxt(mean_and_std_path + "std.txt", a_std)
+
+    return mean, std
+
+def load_mean_and_std():
+    mean = np.loadtxt(mean_and_std_path + "mean.txt")
+    l_mean = mean.reshape(hp.img_size,hp.img_size,3)
+
+    std = np.loadtxt(mean_and_std_path + "std.txt")
+    l_std = std.reshape(hp.img_size,hp.img_size,3)
+
+    return l_mean, l_std
+    
+
+
 
 def calc_prediction(path):
     print('starting')
@@ -26,13 +69,9 @@ def calc_prediction(path):
     eye_2_arr = []
 
     new_path = path  #"static/" + path
+
     #Loads the video as an array of images. in the future we should limit the length of video here
     video_arr = skvideo.io.vread(new_path)
-
-    predict_arr = np.zeros(len(video_arr))
-    blink_counter = 0
-    blink_switch = True
-    drowsy_threshold = 2
     print(np.shape(video_arr))
     
 
@@ -46,24 +85,37 @@ def calc_prediction(path):
             eye_2_arr.append(resize(eye_2,(hp.img_size, hp.img_size, 3), preserve_range=True))
         print(i)
 
-    eye_1_arr = preprocess_image_set(eye_1_arr)
-    eye_2_arr = preprocess_image_set(eye_2_arr)
+    mean, std = load_mean_and_std()
+
+    eye_1_arr = preprocess_image_set(eye_1_arr, mean, std)
+    #eye_2_arr = preprocess_image_set(eye_2_arr)
     print("predicting eye_1")
-    print(np.shape(eye_1_arr))
-    print(model.predict(eye_1_arr))
+    output_arr = model.predict(eye_1_arr)
     print("predicting eye_2")
+    #print(eye_1_arr)
+    for i in range(len(output_arr)):
+        print(str(i) + " is equal to " + str(np.round(output_arr[i])))
     
     print("ending")
+    #print(std)
+    
     time = len(video_arr)/24
-    return blink_counter, time 
+    return blink_counter(output_arr), time 
 
 
-def preprocess_image_set(data):
+def preprocess_image_set(data, mean, std):
 
     data = np.array(data, dtype=np.float32)
     data /=  255.
-    mean = np.mean(data, axis=0)
-    std = np.std(data, axis=0)
+
+    mean = np.zeros((hp.img_size,hp.img_size,3))
+    std = np.ones((hp.img_size,hp.img_size,3))
+
+    for channel in range(3):
+        mean[:, :, channel] = np.mean(data[:, :, :, channel], axis=0)
+        std[:, :, channel] = np.std(data[:, :, :, channel])
+
+
     data = (data-mean) / std
     return data
 
@@ -84,18 +136,27 @@ def get_eye_predict(image):
 
     return 87
 
-calc_prediction("./testing/pogBlink.MOV")
 
-'''
-            if(i > 13):                             #this is for getting N-7, N+7, and N
-                before_predict = predict_arr[i-14]
-                middle_predict = predict_arr[i-7]
-                after_predict = predict_arr[i]
-                
-                if(before_predict + middle_predict + after_predict) > drowsy_threshold:
-                    if(blink_switch):
-                        blink_counter += 1
-                        blink_switch = False
-                else:
-                    blink_switch = True
-                    '''
+#1 is open, 0 is closed
+def blink_counter(data):
+    predict_arr = np.zeros(len(data))
+    drowsy_threshold = 0.2
+    blink_counter = 0
+    blink_switch = True
+
+    for i in range(len(data)):
+        if(i > 13):                             #this is for getting N-7, N+7, and N
+            before_predict = predict_arr[i-14]
+            middle_predict = predict_arr[i-7]
+            after_predict = predict_arr[i]
+            
+            if(before_predict + middle_predict + after_predict) == 0:
+                if(blink_switch):
+                    blink_counter += 1
+                    blink_switch = False
+            else:
+                blink_switch = True
+    return blink_counter
+
+blink, time = calc_prediction("./testing/LongBlink.MOV")
+print("blink is ", str(blink))
