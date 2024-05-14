@@ -11,7 +11,6 @@ app.config['UPLOAD_FOLDER'] = 'static/files'
 
 l1 = 0.0
 l2 = 1.0
-l3 = 3.0
 
 class UploadFileForm(FlaskForm):
     file = FileField("Upload a Video")
@@ -32,8 +31,12 @@ def predict():
                 file_path = "files" + os.sep + file.filename
                 result = generate_prediction(file_path)
                 blinks = result['blinks']
+                print("blinks is")
+                print(blinks)
                 time = result['time']
                 bpm = (blinks * 60.0) / time
+                print("bpm is")
+                print(bpm)
                 if bpm <= l1:
                     level = "1"
                 elif bpm <= l2:
