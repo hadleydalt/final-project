@@ -138,5 +138,5 @@ def blink_counter(data):
             print(str(i), ", ", blink_switch, ", ", blink_length, ",", blink_counter, " : ", middle_predict)
     return blink_counter
 
-blink, time = calc_prediction("./testing/3_blinks.MOV")
-print("blink is ", str(blink))
+#blink, time = calc_prediction("./testing/3_blinks.MOV")
+#print("blink is ", str(blink))
