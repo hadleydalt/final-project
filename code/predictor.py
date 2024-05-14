@@ -60,23 +60,21 @@ def load_mean_and_std():
     return l_mean, l_std
     
 
-
-
 def calc_prediction(path):
     print('starting')
 
     eye_1_arr = []
-    eye_2_arr = []
 
-    new_path = path  #"static/" + path
+    #path = "static" + os.sep + path
 
     #Loads the video as an array of images. in the future we should limit the length of video here
-    video_arr = skvideo.io.vread(new_path)
+    video_arr = skvideo.io.vread(path)
     print(np.shape(video_arr))
     
 
     if(7 > len(video_arr)-7):           #Replace with error message
         print("VIDEO IS TOO SHORT!")
+
     for i in range(0,len(video_arr)):
         image = video_arr[i]
         face, eye_1 = return_eyes(image)
@@ -99,7 +97,7 @@ def calc_prediction(path):
     print("ending")
     #print(std)
     
-    time = len(video_arr)/24
+    time = len(video_arr)/30.
     return blink_counter(output_arr), time 
 
 
@@ -122,7 +120,6 @@ def preprocess_image_set(data, mean, std):
 #1 is open, 0 is closed
 def blink_counter(data):
     predict_arr = np.zeros(len(data))
-    drowsy_threshold = 0.2
     blink_counter = 0
     blink_switch = True
 
@@ -141,5 +138,5 @@ def blink_counter(data):
                 blink_switch = True
     return blink_counter
 
-blink, time = calc_prediction("./testing/3_blinks.MOV")
-print("blink is ", str(blink))
+#blink, time = calc_prediction("./testing/3_blinks.MOV")
+#print("blink is ", str(blink))
