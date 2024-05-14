@@ -12,7 +12,6 @@ import tensorflow as tf
 import hyperparameters as hp
 import cv2
 
-
 model = DDModel()
 model(tf.keras.Input(shape=(hp.img_size, hp.img_size, 3)))
 model.built = True
@@ -21,7 +20,6 @@ model.load_weights("./checkpoints/DD_model/weighty.h5")
 frame_path = "../temp_frame_storage/"
 training_img_path = "../dataset/USED_DATA/train/Closed_Eyes/"
 mean_and_std_path = "../mean_and_std/"
-
 
 def mean_and_std(path):
     img_list = []
@@ -59,7 +57,6 @@ def load_mean_and_std():
 
     return l_mean, l_std
     
-
 def calc_prediction(path):
     print('starting')
 
@@ -101,8 +98,8 @@ def calc_prediction(path):
     time = len(video_arr)/30.
     return blink_counter(output_arr), time 
 
-
 def preprocess_image_set(data, mean, std):
+
 
     data = np.array(data, dtype=np.float32)
     data /=  255.
